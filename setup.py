@@ -10,17 +10,15 @@ setup(
     classifiers=["Programming Language :: Python :: 3 :: Only"],
     py_modules=["tap_amazon_sp"],
     install_requires=[
-        # NB: Pin these to a more specific version for tap reliability
-        "singer-python",
+        "python-amazon-sp-api",
         "requests",
+        "singer-python",
     ],
     entry_points="""
     [console_scripts]
     tap-amazon-sp=tap_amazon_sp:main
     """,
     packages=["tap_amazon_sp"],
-    package_data = {
-        "schemas": ["tap_amazon_sp/schemas/*.json"]
-    },
+    package_data={"schemas": ["tap_amazon_sp/schemas/*.json"]},
     include_package_data=True,
 )

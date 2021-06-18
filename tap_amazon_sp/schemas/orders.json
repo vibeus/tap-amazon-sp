@@ -1,0 +1,958 @@
+{
+  "type": "object",
+  "properties": {
+    "AmazonOrderId": {
+      "description": "An Amazon-defined order identifier, in 3-7-7 format.",
+      "type": "string"
+    },
+    "SellerOrderId": {
+      "description": "A seller-defined order identifier.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "PurchaseDate": {
+      "description": "The date when the order was created.",
+      "type": "string"
+    },
+    "LastUpdateDate": {
+      "description": "The date when the order was last updated.  Note: LastUpdateDate is returned with an incorrect date for orders that were last updated before 2009-04-01.",
+      "type": "string"
+    },
+    "OrderStatus": {
+      "description": "The current order status.",
+      "type": "string"
+    },
+    "FulfillmentChannel": {
+      "description": "Whether the order was fulfilled by Amazon (AFN) or by the seller (MFN).",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "SalesChannel": {
+      "description": "The sales channel of the first item in the order.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "OrderChannel": {
+      "description": "The order channel of the first item in the order.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "ShipServiceLevel": {
+      "description": "The shipment service level of the order.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "OrderTotal": {
+      "description": "The total charge for this order.",
+      "type": [
+        null,
+        "object"
+      ],
+      "properties": {
+        "CurrencyCode": {
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "Amount": {
+          "type": [
+            null,
+            "number"
+          ]
+        }
+      }
+    },
+    "NumberOfItemsShipped": {
+      "description": "The number of items shipped.",
+      "type": [
+        null,
+        "integer"
+      ]
+    },
+    "NumberOfItemsUnshipped": {
+      "description": "The number of items unshipped.",
+      "type": [
+        null,
+        "integer"
+      ]
+    },
+    "PaymentExecutionDetail": {
+      "description": "Information about sub-payment methods for a Cash On Delivery (COD) order.  Note: For a COD order that is paid for using one sub-payment method, one PaymentExecutionDetailItem object is returned, with PaymentExecutionDetailItem/PaymentMethod = COD. For a COD order that is paid for using multiple sub-payment methods, two or more PaymentExecutionDetailItem objects are returned.",
+      "type": [
+        null,
+        "array"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "Payment": {
+            "description": "The monetary value of the order.",
+            "type": "object",
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "PaymentMethod": {
+            "description": "A sub-payment method for a COD order.  Possible values:  <li> COD - Cash On Delivery.</li> <li> GC - Gift Card.</li> <li> PointsAccount - Amazon Points.</li>",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "PaymentMethod": {
+      "description": "The payment method for the order. This property is limited to Cash On Delivery (COD) and Convenience Store (CVS) payment methods. Unless you need the specific COD payment information provided by the PaymentExecutionDetailItem object, we recommend using the PaymentMethodDetails property to get payment method information.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "PaymentMethodDetails": {
+      "description": "A list of payment methods for the order.",
+      "type": [
+        null,
+        "array"
+      ],
+      "items": {
+        "type": "string",
+        "description": "A sub-payment method for a COD order. Possible values: COD - Cash On Delivery; GC - Gift Card; PointsAccount - Amazon Points."
+      }
+    },
+    "MarketplaceId": {
+      "description": "The identifier for the marketplace where the order was placed.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "ShipmentServiceLevelCategory": {
+      "description": "The shipment service level category of the order.  Possible values: Expedited, FreeEconomy, NextDay, SameDay, SecondDay, Scheduled, Standard.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "EasyShipShipmentStatus": {
+      "description": "The status of the Amazon Easy Ship order. This property is included only for Amazon Easy Ship orders.  Possible values: PendingPickUp, LabelCanceled, PickedUp, OutForDelivery, Damaged, Delivered, RejectedByBuyer, Undeliverable, ReturnedToSeller, ReturningToSeller.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "CbaDisplayableShippingLabel": {
+      "description": "Custom ship label for Checkout by Amazon (CBA).",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "OrderType": {
+      "description": "The type of the order.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "EarliestShipDate": {
+      "description": "The start of the time period within which you have committed to ship the order. In ISO 8601 date time format. Returned only for seller-fulfilled orders.  Note: EarliestShipDate might not be returned for orders placed before February 1, 2013.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "LatestShipDate": {
+      "description": "The end of the time period within which you have committed to ship the order. In ISO 8601 date time format. Returned only for seller-fulfilled orders.  Note: LatestShipDate might not be returned for orders placed before February 1, 2013.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "EarliestDeliveryDate": {
+      "description": "The start of the time period within which you have committed to fulfill the order. In ISO 8601 date time format. Returned only for seller-fulfilled orders.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "LatestDeliveryDate": {
+      "description": "The end of the time period within which you have committed to fulfill the order. In ISO 8601 date time format. Returned only for seller-fulfilled orders that do not have a PendingAvailability, Pending, or Canceled status.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "IsBusinessOrder": {
+      "description": "When true, the order is an Amazon Business order. An Amazon Business order is an order where the buyer is a Verified Business Buyer.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "IsPrime": {
+      "description": "When true, the order is a seller-fulfilled Amazon Prime order.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "IsPremiumOrder": {
+      "description": "When true, the order has a Premium Shipping Service Level Agreement. For more information about Premium Shipping orders, see \"Premium Shipping Options\" in the Seller Central Help for your marketplace.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "IsGlobalExpressEnabled": {
+      "description": "When true, the order is a GlobalExpress order.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "ReplacedOrderId": {
+      "description": "The order ID value for the order that is being replaced. Returned only if IsReplacementOrder = true.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "IsReplacementOrder": {
+      "description": "When true, this is a replacement order.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "PromiseResponseDueDate": {
+      "description": "Indicates the date by which the seller must respond to the buyer with an estimated ship date. Returned only for Sourcing on Demand orders.",
+      "type": [
+        null,
+        "string"
+      ]
+    },
+    "IsEstimatedShipDateSet": {
+      "description": "When true, the estimated ship date is set for the order. Returned only for Sourcing on Demand orders.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "IsSoldByAB": {
+      "description": "When true, the item within this order was bought and re-sold by Amazon Business EU SARL (ABEU). By buying and instantly re-selling your items, ABEU becomes the seller of record, making your inventory available for sale to customers who would not otherwise purchase from a third-party seller.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "DefaultShipFromLocationAddress": {
+      "description": "The recommended location for the seller to ship the items from. It is calculated at checkout. The seller may or may not choose to ship from this location.",
+      "type": [
+        null,
+        "object"
+      ],
+      "properties": {
+        "Name": {
+          "description": "The name.",
+          "type": "string"
+        },
+        "AddressLine1": {
+          "description": "The street address.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "AddressLine2": {
+          "description": "Additional street address information, if required.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "AddressLine3": {
+          "description": "Additional street address information, if required.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "City": {
+          "description": "The city",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "County": {
+          "description": "The county.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "District": {
+          "description": "The district.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "StateOrRegion": {
+          "description": "The state or region.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "Municipality": {
+          "description": "The municipality.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "PostalCode": {
+          "description": "The postal code.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "CountryCode": {
+          "description": "The country code. A two-character country code, in ISO 3166-1 alpha-2 format.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "Phone": {
+          "description": "The phone number. Not returned for Fulfillment by Amazon (FBA) orders.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "AddressType": {
+          "description": "The address type of the shipping address.",
+          "type": [
+            null,
+            "string"
+          ]
+        }
+      }
+    },
+    "FulfillmentInstruction": {
+      "description": "Contains the instructions about the fulfillment like where should it be fulfilled from.",
+      "type": [
+        null,
+        "object"
+      ],
+      "properties": {
+        "FulfillmentSupplySourceId": {
+          "description": "Denotes the recommended sourceId where the order should be fulfilled from.",
+          "type": [
+            null,
+            "string"
+          ]
+        }
+      }
+    },
+    "IsISPU": {
+      "description": "When true, this order is marked to be picked up from a store rather than delivered.",
+      "type": [
+        null,
+        "boolean"
+      ]
+    },
+    "OrderItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ASIN": {
+            "description": "The Amazon Standard Identification Number (ASIN) of the item.",
+            "type": "string"
+          },
+          "SellerSKU": {
+            "description": "The seller stock keeping unit (SKU) of the item.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "OrderItemId": {
+            "description": "An Amazon-defined order item identifier.",
+            "type": "string"
+          },
+          "Title": {
+            "description": "The name of the item.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "QuantityOrdered": {
+            "description": "The number of items in the order.",
+            "type": "integer"
+          },
+          "QuantityShipped": {
+            "description": "The number of items shipped.",
+            "type": [
+              null,
+              "integer"
+            ]
+          },
+          "ProductInfo": {
+            "description": "Product information for the item.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "NumberOfItems": {
+                "description": "The total number of items that are included in the ASIN.",
+                "type": [
+                  null,
+                  "integer"
+                ]
+              }
+            }
+          },
+          "PointsGranted": {
+            "description": "The number and value of Amazon Points granted with the purchase of an item.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "PointsNumber": {
+                "description": "The number of Amazon Points granted with the purchase of an item.",
+                "type": [
+                  null,
+                  "integer"
+                  ]
+              },
+              "PointsMonetaryValue": {
+                "description": "The monetary value of the Amazon Points granted.",
+                "type": [
+                  null,
+                  "object"
+                ],
+                "properties": {
+                  "CurrencyCode": {
+                    "type": [
+                      null,
+                      "string"
+                    ]
+                  },
+                  "Amount": {
+                    "type": [
+                      null,
+                      "number"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "ItemPrice": {
+            "description": "The selling price of the order item. Note that an order item is an item and a quantity. This means that the value of ItemPrice is equal to the selling price of the item multiplied by the quantity ordered. Note that ItemPrice excludes ShippingPrice and GiftWrapPrice.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "ShippingPrice": {
+            "description": "The shipping price of the item.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "ItemTax": {
+            "description": "The tax on the item price.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "ShippingTax": {
+            "description": "The tax on the shipping price.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "ShippingDiscount": {
+            "description": "The discount on the shipping price.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "ShippingDiscountTax": {
+            "description": "The tax on the discount on the shipping price.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "PromotionDiscount": {
+            "description": "The total of all promotional discounts in the offer.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "PromotionDiscountTax": {
+            "description": "The tax on the total of all promotional discounts in the offer.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "PromotionIds": {
+            "description": "A list of promotion identifiers provided by the seller when the promotions were created.",
+            "type": [
+              null,
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "CODFee": {
+            "description": "The fee charged for COD service.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "CODFeeDiscount": {
+            "description": "The discount on the COD fee.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "Amount": {
+                "type": [
+                  null,
+                  "number"
+                ]
+              }
+            }
+          },
+          "IsGift": {
+            "description": "When true, the item is a gift.",
+            "type": [
+              null,
+              "boolean"
+            ]
+          },
+          "ConditionNote": {
+            "description": "The condition of the item as described by the seller.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "ConditionId": {
+            "description": "The condition of the item.  Possible values: New, Used, Collectible, Refurbished, Preorder, Club.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "ConditionSubtypeId": {
+            "description": "The subcondition of the item.  Possible values: New, Mint, Very Good, Good, Acceptable, Poor, Club, OEM, Warranty, Refurbished Warranty, Refurbished, Open Box, Any, Other.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "ScheduledDeliveryStartDate": {
+            "description": "The start date of the scheduled delivery window in the time zone of the order destination. In ISO 8601 date time format.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "ScheduledDeliveryEndDate": {
+            "description": "The end date of the scheduled delivery window in the time zone of the order destination. In ISO 8601 date time format.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "PriceDesignation": {
+            "description": "Indicates that the selling price is a special price that is available only for Amazon Business orders. For more information about the Amazon Business Seller Program, see the [Amazon Business website](https://www.amazon.com/b2b/info/amazon-business).   Possible values: BusinessPrice - A special price that is available only for Amazon Business orders.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "TaxCollection": {
+            "description": "Information about withheld taxes.",
+            "type": [
+              null,
+              "object"
+            ],
+            "properties": {
+              "Model": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              },
+              "ResponsibleParty": {
+                "type": [
+                  null,
+                  "string"
+                ]
+              }
+            }
+          },
+          "SerialNumberRequired": {
+            "description": "When true, the product type for this item has a serial number.  Returned only for Amazon Easy Ship orders.",
+            "type": [
+              null,
+              "boolean"
+            ]
+          },
+          "IsTransparency": {
+            "description": "When true, transparency codes are required.",
+            "type": [
+              null,
+              "boolean"
+            ]
+          },
+          "IossNumber": {
+            "description": "The IOSS number of the seller. Sellers selling in the EU will be assigned a unique IOSS number that must be listed on all packages sent to the EU.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "StoreChainStoreId": {
+            "description": "The store chain store identifier. Linked to a specific store in a store chain.",
+            "type": [
+              null,
+              "string"
+            ]
+          },
+          "DeemedResellerCategory": {
+            "description": "The category of deemed reseller. This applies to selling partners that are not based in the EU and is used to help them meet the VAT Deemed Reseller tax laws in the EU and UK.",
+            "type": [
+              null,
+              "string"
+            ]
+          }
+        }
+      }
+    },
+    "BuyerInfo": {
+      "type": [
+        null,
+        "object"
+      ],
+      "properties": {
+        "BuyerEmail": {
+          "description": "The anonymized email address of the buyer.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "BuyerName": {
+          "description": "The name of the buyer.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "BuyerCounty": {
+          "description": "The county of the buyer.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "BuyerTaxInfo": {
+          "description": "Tax information about the buyer.",
+          "type": [
+            null,
+            "object"
+          ],
+          "properties": {
+            "CompanyLegalName": {
+              "type": [
+                null,
+                "string"
+              ]
+            },
+            "TaxingRegion": {
+              "type": [
+                null,
+                "string"
+              ]
+            }
+          }
+        },
+        "PurchaseOrderNumber": {
+          "description": "The purchase order (PO) number entered by the buyer at checkout. Returned only for orders where the buyer entered a PO number at checkout.",
+          "type": [
+            null,
+            "string"
+          ]
+        }
+      }
+    },
+    "ShippingAddress": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "description": "The name.",
+          "type": "string"
+        },
+        "AddressLine1": {
+          "description": "The street address.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "AddressLine2": {
+          "description": "Additional street address information, if required.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "AddressLine3": {
+          "description": "Additional street address information, if required.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "City": {
+          "description": "The city",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "County": {
+          "description": "The county.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "District": {
+          "description": "The district.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "StateOrRegion": {
+          "description": "The state or region.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "Municipality": {
+          "description": "The municipality.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "PostalCode": {
+          "description": "The postal code.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "CountryCode": {
+          "description": "The country code. A two-character country code, in ISO 3166-1 alpha-2 format.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "Phone": {
+          "description": "The phone number. Not returned for Fulfillment by Amazon (FBA) orders.",
+          "type": [
+            null,
+            "string"
+          ]
+        },
+        "AddressType": {
+          "description": "The address type of the shipping address.",
+          "type": [
+            null,
+            "string"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import re
 import json
 import singer
 from singer import utils, metadata, Transformer
@@ -8,8 +9,34 @@ from singer.schema import Schema
 from tap_amazon_sp.streams import create_stream
 
 
-REQUIRED_CONFIG_KEYS = ["start_date", "username", "password"]
+REQUIRED_CONFIG_KEYS = ["start_date", "access_key_id", "secret_access_key", "lwa_client_id", "lwa_client_secret"]
 LOGGER = singer.get_logger()
+
+
+def expand_env(config):
+    assert isinstance(config, dict)
+
+    def repl(match):
+        env_key = match.group(1)
+        return os.environ.get(env_key, "")
+
+    def expand(v):
+        assert not isinstance(v, dict)
+        if isinstance(v, str):
+            return re.sub(r"\$env\[(\w+)\]", repl, v)
+        else:
+            return v
+
+    copy = {}
+    for k, v in config.items():
+        if isinstance(v, dict):
+            copy[k] = expand_env(v)
+        elif isinstance(v, list):
+            copy[k] = [expand_env(x) if isinstance(x, dict) else expand(x) for x in v]
+        else:
+            copy[k] = expand(v)
+
+    return copy
 
 
 def get_abs_path(path):
@@ -60,6 +87,7 @@ def sync(config, state, catalog):
         LOGGER.info("Syncing stream:" + stream_id)
 
         bookmark_column = catalog_stream.replication_key
+        max_bookmark = None
 
         singer.write_schema(
             stream_name=stream_id,
@@ -69,16 +97,18 @@ def sync(config, state, catalog):
 
         stream = create_stream(stream_id)
 
-        max_bookmark = None
         t = Transformer()
-        for row in stream.get_tap_data(state):
+        for row in stream.get_tap_data(config, state):
             schema = catalog_stream.schema.to_dict()
             mdata = metadata.to_map(catalog_stream.metadata)
             record = t.transform(row, schema, mdata)
 
             singer.write_records(stream_id, [record])
-            if bookmark_column:
-                singer.write_state({stream_id: row[bookmark_column]})
+            if bookmark_column and (not max_bookmark or row[bookmark_column] > max_bookmark):
+                max_bookmark = row[bookmark_column]
+
+        if max_bookmark:
+            singer.write_state({stream_id: max_bookmark})
 
 
 @utils.handle_top_exception(LOGGER)
@@ -96,6 +126,8 @@ def main():
             catalog = args.catalog
         else:
             catalog = discover()
+
+        args.config = expand_env(args.config)
         sync(args.config, args.state, catalog)
 
 

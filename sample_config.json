@@ -1,5 +1,20 @@
 {
-  "username": "my_username",
-  "password": "my_password",
-  "start_date": "2017-01-01T00:00:00Z"
+  "accounts": [
+    {
+      "selling_partner_id": "NA_SELLING_PARTNER_ID",
+      "marketplaces": ["US", "MX", "CA"],
+      "refresh_token": "$env[NA_REFRESH_TOKEN]"
+    },
+    {
+      "selling_partner_id": "AU_SELLING_PARTNER_ID",
+      "marketplaces": ["AU"],
+      "refresh_token": "$env[AU_REFRESH_TOKEN]"
+    }
+  ],
+  "access_key_id": "ACCESS_KEY_ID",
+  "secret_access_key": "$env[SECRET_ACCESS_KEY]",
+  "sp_role_arn": "arn:aws:iam::1234567890:role/RoleName",
+  "lwa_client_id": "CLIENT_ID",
+  "lwa_client_secret": "$env[LWA_CLIENT_SECRET]",
+  "start_date": "2021-01-01T00:00:00Z"
 }

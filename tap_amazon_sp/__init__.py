@@ -86,9 +86,6 @@ def sync(config, state, catalog):
         stream_id = catalog_stream.tap_stream_id
         LOGGER.info("Syncing stream:" + stream_id)
 
-        bookmark_column = catalog_stream.replication_key
-        max_bookmark = None
-
         singer.write_schema(
             stream_name=stream_id,
             schema=catalog_stream.schema.to_dict(),
@@ -96,19 +93,17 @@ def sync(config, state, catalog):
         )
 
         stream = create_stream(stream_id)
+        stream_state = state.get(stream_id, {})
 
         t = Transformer()
-        for row in stream.get_tap_data(config, state):
+        for row in stream.get_tap_data(config, stream_state):
             schema = catalog_stream.schema.to_dict()
             mdata = metadata.to_map(catalog_stream.metadata)
             record = t.transform(row, schema, mdata)
 
             singer.write_records(stream_id, [record])
-            if bookmark_column and (not max_bookmark or row[bookmark_column] > max_bookmark):
-                max_bookmark = row[bookmark_column]
 
-        if max_bookmark:
-            singer.write_state({stream_id: max_bookmark})
+        singer.write_state({stream_id: stream.state})
 
 
 @utils.handle_top_exception(LOGGER)

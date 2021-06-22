@@ -23,7 +23,7 @@ def expand_env(config):
     def expand(v):
         assert not isinstance(v, dict)
         if isinstance(v, str):
-            return re.sub(r"\$env\[(\w+)\]", repl, v)
+            return re.sub(r"env\[(\w+)\]", repl, v)
         else:
             return v
 

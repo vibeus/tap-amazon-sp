@@ -7,7 +7,7 @@ from sp_api.base import SellingApiRequestThrottledException, Marketplaces
 from datetime import datetime, timedelta
 
 LOGGER = singer.get_logger()
-BACKOFF_SECONDS = 30
+DEFAULT_BACKOFF_SECONDS = 60
 
 
 class Orders:
@@ -56,6 +56,7 @@ class Orders:
 
         today = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
         self.__start_date = config.get("start_date", today)
+        self.__backoff_seconds = config.get("rate_limit_backoff_seconds", DEFAULT_BACKOFF_SECONDS)
         self.__state = state.copy()
 
         for account in config.get("accounts", []):
@@ -91,8 +92,8 @@ class Orders:
                 if not next_token:
                     break
             except SellingApiRequestThrottledException:
-                LOGGER.warning(f"Rate limit exceeded. Waiting {BACKOFF_SECONDS} seconds...")
-                time.sleep(BACKOFF_SECONDS)
+                LOGGER.warning(f"Rate limit exceeded. Waiting {self.__backoff_seconds} seconds...")
+                time.sleep(self.__backoff_seconds)
 
         self.__state[orders_api.marketplace_id] = max_rep_key
 
@@ -107,8 +108,8 @@ class Orders:
                 order["ShippingAddress"] = self.get_order_address(orders_api, order_id)
                 return order
             except SellingApiRequestThrottledException:
-                LOGGER.warning(f"Rate limit exceeded. Waiting {BACKOFF_SECONDS} seconds...")
-                time.sleep(BACKOFF_SECONDS)
+                LOGGER.warning(f"Rate limit exceeded. Waiting {self.__backoff_seconds} seconds...")
+                time.sleep(self.__backoff_seconds)
 
     def get_order_items(self, orders_api, order_id):
         order_items = []

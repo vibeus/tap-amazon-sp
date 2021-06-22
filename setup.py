@@ -18,7 +18,7 @@ setup(
     [console_scripts]
     tap-amazon-sp=tap_amazon_sp:main
     """,
-    packages=["tap_amazon_sp"],
+    packages=["tap_amazon_sp", "tap_amazon_sp.streams"],
     package_data={"schemas": ["tap_amazon_sp/schemas/*.json"]},
     include_package_data=True,
 )

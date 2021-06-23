@@ -44,7 +44,7 @@ pip install tap-amazon-sp
       "rate_limit_backoff_seconds": 60
     }
     ```
-3. Discover catalog: `tap-amazon-sp -d > catalog.json`
+3. Discover catalog: `tap-amazon-sp -c config.json -d > catalog.json`
 4. Select `orders` stream in the generated `catalog.json`.
     ```
     ...

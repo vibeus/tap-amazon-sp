@@ -1,0 +1,253 @@
+{
+  "type": "object",
+  "properties": {
+    "AmazonOrderId": {
+      "description": "An Amazon-defined identifier for an order.",
+      "type": "string"
+    },
+    "SellerOrderId": {
+      "description": "A seller-defined identifier for an order.",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "MarketplaceName": {
+      "description": "The name of the marketplace where the event occurred.",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "PostedDate": {
+      "description": "The date and time when the financial event was posted.",
+      "type": "string"
+    },
+    "EventType": {
+      "description": "EventType: Charge or Refund",
+      "type": "string"
+    },
+    "ShipmentItemList": {
+      "description": "A list of shipment items.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "SellerSKU": {
+            "description": "The seller SKU of the item. The seller SKU is qualified by the seller's seller ID, which is included with every call to the Selling Partner API.",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "OrderItemId": {
+            "description": "An Amazon-defined order item identifier.",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "QuantityShipped": {
+            "description": "The number of items shipped.",
+            "type": [
+              "null",
+              "integer"
+            ]
+          },
+          "ItemChargeList": {
+            "description": "A list of charges associated with the shipment item.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ChargeType": {
+                  "description": "The type of charge.",
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "ChargeAmount": {
+                  "description": "The amount of the charge.",
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "CurrencyCode": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "CurrencyAmount": {
+                      "type": [
+                        "null",
+                        "number"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ItemFeeList": {
+            "description": "A list of fees associated with the shipment item.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "FeeType": {
+                  "description": "The type of fee.",
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "FeeAmount": {
+                  "description": "The amount of the fee.",
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "CurrencyCode": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "CurrencyAmount": {
+                      "type": [
+                        "null",
+                        "number"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ItemTaxWithheldList": {
+            "description": "A list of taxes withheld information for a shipment item.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "TaxCollectionModel": {
+                  "description": "The tax collection model applied to the item.  Possible values:  1.  MarketplaceFacilitator - Tax is withheld and remitted to the taxing authority by Amazon on behalf of the seller. 2. Standard - Tax is paid to the seller and not remitted to the taxing authority by Amazon.",
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "TaxesWithheld": {
+                  "description": "A list of charges that represent the types and amounts of taxes withheld.",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ChargeType": {
+                        "description": "The type of charge.",
+                        "type": [
+                          "null",
+                          "string"
+                        ]
+                      },
+                      "ChargeAmount": {
+                        "description": "The amount of the charge.",
+                        "type": [
+                          "null",
+                          "object"
+                        ],
+                        "properties": {
+                          "CurrencyCode": {
+                            "type": [
+                              "null",
+                              "string"
+                            ]
+                          },
+                          "CurrencyAmount": {
+                            "type": [
+                              "null",
+                              "number"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "PromotionList": {
+            "description": "A list of promotions.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "PromotionType": {
+                  "description": "The type of promotion.",
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "PromotionId": {
+                  "description": "The seller-specified identifier for the promotion.",
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "PromotionAmount": {
+                  "description": "The amount of promotional discount applied to the item.",
+                  "type": [
+                    "null",
+                    "object"
+                  ],
+                  "properties": {
+                    "CurrencyCode": {
+                      "type": [
+                        "null",
+                        "string"
+                      ]
+                    },
+                    "CurrencyAmount": {
+                      "type": [
+                        "null",
+                        "number"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "CostOfPoints": {
+            "description": "The cost of Amazon Points granted or returned for a shipment item.",
+            "type": [
+              "null",
+              "object"
+            ],
+            "properties": {
+              "CurrencyCode": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "CurrencyAmount": {
+                "type": [
+                  "null",
+                  "number"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

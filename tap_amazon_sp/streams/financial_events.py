@@ -10,7 +10,7 @@ LOGGER = singer.get_logger()
 DEFAULT_BACKOFF_SECONDS = 60
 
 
-class financialEvents:
+class FinancialEvents:
     def __init__(self):
         self.__start_date = ""
         self.__state = {}
@@ -99,7 +99,6 @@ class financialEvents:
 
                 next_token = resp.payload.get("NextToken")
                 if not next_token:
-                    # break
                     if before < today:
                         next_token = ""
                         after = before

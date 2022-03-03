@@ -26,14 +26,6 @@ class Orders(Base):
     def specific_api(self):
         return api.Orders
 
-    def get_account_data(self, account, credentials):
-        account_id = account["selling_partner_id"]
-        for market_name in account["marketplaces"]:
-            LOGGER.info(f"Loading orders for account {account_id}, market {market_name}...")
-            marketplace = getattr(Marketplaces, market_name)
-            specific_api = self.specific_api(credentials=credentials, marketplace=marketplace, account=account_id)
-            yield from self.get_api_data(specific_api)
-
     def get_api_data(self, specific_api):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)
         after = max(self._start_date, state_date)

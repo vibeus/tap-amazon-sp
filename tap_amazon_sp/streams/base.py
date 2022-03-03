@@ -39,6 +39,10 @@ class Base:
     def specific_api(self):
         return api
 
+    def market_places(self, marketplaces):
+        return marketplaces, \
+               [getattr(Marketplaces, name) for name in marketplaces]
+
 
     def get_metadata(self, schema):
         mdata = metadata.get_standard_metadata(
@@ -71,10 +75,14 @@ class Base:
 
     def get_account_data(self, account, credentials):
         account_id = account["selling_partner_id"]
-        LOGGER.info("Loading {} for account {}...".format(self.name, account_id))
-        marketplace = getattr(Marketplaces, account["marketplaces"][0])
-        specific_api = self.specific_api(credentials=credentials, marketplace=marketplace, account=account_id)
-        yield from self.get_api_data(specific_api)
+        marketnames, marketplaces = self.market_places(account["marketplaces"])
+        assert(len(marketnames) == len(marketplaces))
+
+        for i in range(len(marketplaces)):
+            LOGGER.info(f"Loading {self.name} for account {account_id}, market {marketnames[i]}...")
+            # marketplace = getattr(Marketplaces, market_name)
+            specific_api = self.specific_api(credentials=credentials, marketplace=marketplaces[i], account=account_id)
+            yield from self.get_api_data(specific_api)
     
     def get_api_data(self, specific_api):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)

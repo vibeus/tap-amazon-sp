@@ -26,12 +26,8 @@ class FinancialEvents(Base):
     def specific_api(self):
         return api.Finances
 
-    def get_account_data(self, account, credentials):
-        account_id = account["selling_partner_id"]
-        LOGGER.info("Loading {} for account {}...".format(self.name, account_id))
-        marketplace = getattr(Marketplaces, account["marketplaces"][0])
-        specific_api = self.specific_api(credentials=credentials, marketplace=marketplace, account=account_id)
-        yield from self.get_api_data(specific_api)
+    def market_places(self, marketplaces):
+        return [", ".join(marketplaces)], [getattr(Marketplaces,marketplaces[0])]
 
     def get_api_data(self, specific_api):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)

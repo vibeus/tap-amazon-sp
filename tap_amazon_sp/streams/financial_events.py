@@ -16,7 +16,7 @@ class FinancialEvents(Base):
 
     @property
     def key_properties(self):
-        return ["AmazonOrderId"]
+        return ["AmazonOrderId", "EventType", "PostedDate"]
 
     @property
     def replication_key(self):

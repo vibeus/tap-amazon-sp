@@ -80,7 +80,6 @@ class Base:
 
         for i in range(len(marketplaces)):
             LOGGER.info(f"Loading {self.name} for account {account_id}, market {marketnames[i]}...")
-            # marketplace = getattr(Marketplaces, market_name)
             specific_api = self.specific_api(credentials=credentials, marketplace=marketplaces[i], account=account_id)
             yield from self.get_api_data(specific_api)
     

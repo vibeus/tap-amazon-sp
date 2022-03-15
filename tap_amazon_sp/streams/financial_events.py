@@ -29,7 +29,7 @@ class FinancialEvents(Base):
     def market_places(self, marketplaces):
         return [", ".join(marketplaces)], [getattr(Marketplaces,marketplaces[0])]
 
-    def get_api_data(self, specific_api):
+    def get_api_data(self, specific_api, marketplace):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)
         after = max(self._start_date, state_date)
         max_rep_key = after
@@ -82,6 +82,6 @@ class FinancialEvents(Base):
                     if "CostOfPoints" in key:
                         item["CostOfPoints"] = item.pop(key)
         
-        event["EventType"]=type
+        event["EventType"] = type
 
         return event

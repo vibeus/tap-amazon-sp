@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "marketplaceId": {
+      "type": "string"
+    },
+    "asin": {
+      "type": "string"
+    },
+    "fnSku": {
+      "type": "string"
+    },
+    "sellerSku": {
+      "type": "string"
+    },
+    "condition": {
+      "type": "string"
+    },
+    "fulfillableQuantity": {
+      "type": "number"
+    },
+    "inboundWorkingQuantity": {
+      "type": "number"
+    },
+    "inboundShippedQuantity": {
+      "type": "number"
+    },
+    "inboundReceivingQuantity": {
+      "type": "number"
+    },
+    "totalReservedQuantity": {
+      "type": "number"
+    },
+    "pendingCustomerOrderQuantity": {
+      "type": "number"
+    },
+    "pendingTransshipmentQuantity": {
+      "type": "number"
+    },
+    "fcProcessingQuantity": {
+      "type": "number"
+    },
+    "totalResearchingQuantity": {
+      "type": "number"
+    },
+    "researchingQuantityInShortTerm": {
+      "type": "number"
+    },
+    "researchingQuantityInMidTerm": {
+      "type": "number"
+    },
+    "researchingQuantityInLongTerm": {
+      "type": "number"
+    },
+    "totalUnfulfillableQuantity": {
+      "type": "number"
+    },
+    "customerDamagedQuantity": {
+      "type": "number"
+    },
+    "warehouseDamagedQuantity": {
+      "type": "number"
+    },
+    "carrierDamagedQuantity": {
+      "type": "number"
+    },
+    "defectiveQuantity": {
+      "type": "number"
+    },
+    "expiredQuantity": {
+      "type": "number"
+    },
+    "reservedFutureSupplyQuantity": {
+      "type": "number"
+    },
+    "futureSupplyBuyableQuantity": {
+      "type": "number"
+    },
+    "lastUpdatedTime": {
+      "type": "string"
+    },
+    "productName": {
+      "type": "string"
+    },
+    "totalQuantity": {
+      "type": "string"
+    }
+  }
+}

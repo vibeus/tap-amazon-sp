@@ -79,11 +79,12 @@ class Base:
         assert(len(marketnames) == len(marketplaces))
 
         for i in range(len(marketplaces)):
+            marketplace = marketplaces[i]
             LOGGER.info(f"Loading {self.name} for account {account_id}, market {marketnames[i]}...")
-            specific_api = self.specific_api(credentials=credentials, marketplace=marketplaces[i], account=account_id)
-            yield from self.get_api_data(specific_api)
+            specific_api = self.specific_api(credentials=credentials, marketplace=marketplace, account=account_id)
+            yield from self.get_api_data(specific_api, marketplace)
     
-    def get_api_data(self, specific_api):
+    def get_api_data(self, specific_api, marketplace):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)
         after = max(self._start_date, state_date)
         max_rep_key = after

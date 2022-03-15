@@ -26,7 +26,7 @@ class Orders(Base):
     def specific_api(self):
         return api.Orders
 
-    def get_api_data(self, specific_api):
+    def get_api_data(self, specific_api, marketplace):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)
         after = max(self._start_date, state_date)
         max_rep_key = after

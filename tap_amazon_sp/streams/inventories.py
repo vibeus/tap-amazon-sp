@@ -16,7 +16,7 @@ class Inventories(Base):
 
     @property
     def key_properties(self):
-        return ["asin", "sellerSku"]
+        return ["marketplaceId", "asin", "sellerSku"]
 
     @property
     def replication_key(self):

@@ -14,76 +14,76 @@
       "type": "string"
     },
     "condition": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "fulfillableQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "inboundWorkingQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "inboundShippedQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "inboundReceivingQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "totalReservedQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "pendingCustomerOrderQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "pendingTransshipmentQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "fcProcessingQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "totalResearchingQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "researchingQuantityInShortTerm": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "researchingQuantityInMidTerm": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "researchingQuantityInLongTerm": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "totalUnfulfillableQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "customerDamagedQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "warehouseDamagedQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "carrierDamagedQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "defectiveQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "expiredQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "reservedFutureSupplyQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "futureSupplyBuyableQuantity": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "lastUpdatedTime": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "productName": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "totalQuantity": {
-      "type": "string"
+      "type": ["null", "number"]
     }
   }
 }

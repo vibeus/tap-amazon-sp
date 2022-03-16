@@ -31,24 +31,18 @@ class Inventories(Base):
         after = max(self._start_date, state_date)
         max_rep_key = after
 
-        next_token = ""
-        while True:
-            try:
-                resp = specific_api.get_inventory_summary_marketplace(**{ "details": True, "marketplaceIds": [ marketplace.value[1]] })
-                for item in resp.payload["inventorySummaries"]:
-                    rep_key = item.get(self.replication_key)
-                    if rep_key and rep_key > max_rep_key:
-                        max_rep_key = rep_key
-                    
-                    yield self.unnest_record(item, marketplace.value[1])
+        try:
+            resp = specific_api.get_inventory_summary_marketplace(**{ "details": True, "marketplaceIds": [ marketplace.value[1]] })
+            for item in resp.payload["inventorySummaries"]:
+                rep_key = item.get(self.replication_key)
+                if rep_key and rep_key > max_rep_key:
+                    max_rep_key = rep_key
+                
+                yield self.unnest_record(item, marketplace.value[1])
 
-
-                next_token = resp.payload.get("NextToken")
-                if not next_token:
-                        break
-            except SellingApiRequestThrottledException:
-                LOGGER.warning(f"Rate limit exceeded. Waiting {self.__backoff_seconds} seconds...")
-                time.sleep(self.__backoff_seconds)
+        except SellingApiRequestThrottledException:
+            LOGGER.warning(f"Rate limit exceeded. Waiting {self.__backoff_seconds} seconds...")
+            time.sleep(self.__backoff_seconds)
 
         self._state[specific_api.marketplace_id] = max_rep_key
     

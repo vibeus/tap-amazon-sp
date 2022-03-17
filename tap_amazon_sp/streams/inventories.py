@@ -9,6 +9,9 @@ from .base import Base
 
 LOGGER = singer.get_logger()
 
+CA_marketplaceId = getattr(Marketplaces, "CA").value[1]
+US_marketplaceId = getattr(Marketplaces, "US").value[1]
+
 class Inventories(Base):
     @property
     def name(self):
@@ -25,6 +28,22 @@ class Inventories(Base):
     @property
     def specific_api(self):
         return api.Inventories
+    
+    # def market_places(self, marketplaces):
+    #     return [", ".join(marketplaces)], [getattr(Marketplaces,marketplaces[0])]
+
+    def market_places(self, marketplaces):
+        if "US" in marketplaces:
+            return ["US, CA"], [getattr(Marketplaces, "US")]
+
+        # elif "SG" in marketplaces:
+        #     return ["SG"], [getattr(Marketplaces, "SG")]
+
+        elif "GB" in marketplaces:
+            return ["GB", "DE"], [getattr(Marketplaces, name) for name in ["GB", "DE"]]
+
+        else:
+            return [], []
 
     def get_api_data(self, specific_api, marketplace):
         state_date = self._state.get(specific_api.marketplace_id, self._start_date)
@@ -37,7 +56,7 @@ class Inventories(Base):
                 rep_key = item.get(self.replication_key)
                 if rep_key and rep_key > max_rep_key:
                     max_rep_key = rep_key
-                
+
                 yield self.unnest_record(item, marketplace.value[1])
 
         except SellingApiRequestThrottledException:
@@ -47,7 +66,11 @@ class Inventories(Base):
         self._state[specific_api.marketplace_id] = max_rep_key
     
     def unnest_record(self, item, marketplaceId):
+
         item["marketplaceId"] = marketplaceId
+
+        if marketplaceId == US_marketplaceId and "CA" in item["sellerSku"]:
+            item["marketplaceId"] = CA_marketplaceId
 
         item.update(item['inventoryDetails'])
         item.pop('inventoryDetails', None)

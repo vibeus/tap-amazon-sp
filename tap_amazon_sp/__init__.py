@@ -82,6 +82,8 @@ def discover():
 def sync(config, state, catalog):
     """Sync data from tap source"""
 
+    state_dict = {}
+
     for catalog_stream in catalog.get_selected_streams(state):
         stream_id = catalog_stream.tap_stream_id
         LOGGER.info("Syncing stream:" + stream_id)
@@ -102,8 +104,8 @@ def sync(config, state, catalog):
             record = t.transform(row, schema, mdata)
 
             singer.write_records(stream_id, [record])
-
-        singer.write_state({stream_id: stream.state})
+        state_dict[stream_id] = stream.state
+        singer.write_state(state_dict)
 
 
 @utils.handle_top_exception(LOGGER)

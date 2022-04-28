@@ -34,7 +34,7 @@ class Inventories(Base):
 
     def market_places(self, marketplaces):
         if "US" in marketplaces:
-            return ["US, CA"], [getattr(Marketplaces, "US")]
+            return ["US", "CA"], [getattr(Marketplaces, name) for name in ["US", "CA"]]
 
         # elif "SG" in marketplaces:
         #     return ["SG"], [getattr(Marketplaces, "SG")]
@@ -56,21 +56,18 @@ class Inventories(Base):
                 rep_key = item.get(self.replication_key)
                 if rep_key and rep_key > max_rep_key:
                     max_rep_key = rep_key
-
+                
                 yield self.unnest_record(item, marketplace.value[1])
 
         except SellingApiRequestThrottledException:
-            LOGGER.warning(f"Rate limit exceeded. Waiting {self.__backoff_seconds} seconds...")
-            time.sleep(self.__backoff_seconds)
+            LOGGER.warning(f"Rate limit exceeded. Waiting {self._backoff_seconds} seconds...")
+            time.sleep(self._backoff_seconds)
 
         self._state[specific_api.marketplace_id] = max_rep_key
     
     def unnest_record(self, item, marketplaceId):
 
         item["marketplaceId"] = marketplaceId
-
-        if marketplaceId == US_marketplaceId and "CA" in item["sellerSku"]:
-            item["marketplaceId"] = CA_marketplaceId
 
         item.update(item['inventoryDetails'])
         item.pop('inventoryDetails', None)

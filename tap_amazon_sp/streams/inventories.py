@@ -19,12 +19,12 @@ class Inventories(Base):
 
     @property
     def key_properties(self):
-        return ["marketplaceId", "asin", "sellerSku"]
+        return ["marketplaceId", "asin", "sellerSku", "lastUpdatedTime"]
 
     @property
     def replication_key(self):
         return "lastUpdatedTime"
-    
+
     @property
     def specific_api(self):
         return api.Inventories
